@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: yandex/clickhouse-server
+    container_name: clickhouse
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      - CLICKHOUSE_PASSWORD=password
+
+  vault:
+    image: vault:1.12.0
+    container_name: vault
+    ports:
+      - "8200:8200"
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=root
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+
+  rest-api-app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Dockerfile'ın adı ve yolu
+    container_name: rest-api-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - clickhouse
+      - vault
+    environment:
+      - VAULT_ADDR=http://vault:8200
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
