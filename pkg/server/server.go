@@ -3,24 +3,23 @@
 package server
 
 import (
-    "net/http"
-    "project/pkg/handlers"
-    "github.com/gorilla/mux"
+	"net/http"
+	"project/pkg/handlers"
+
+	"github.com/gorilla/mux"
 )
 
-// StartServer initializes and starts the HTTP server.
+// Start serwera
 func StartServer() error {
-    r := mux.NewRouter()
-    r.HandleFunc("/users", handlers.CreateUser).Methods("POST")
-    r.HandleFunc("/keys", handlers.CreateKey).Methods("POST")
-    r.HandleFunc("/items", handlers.CreateItem).Methods("POST")
-    r.HandleFunc("/policies", handlers.CreatePolicy).Methods("POST")
-    // Add other routes as necessary
+	r := mux.NewRouter()
+	r.HandleFunc("/users", handlers.CreateUser).Methods("POST")
+	r.HandleFunc("/keys", handlers.CreateKey).Methods("POST")
+	r.HandleFunc("/items", handlers.CreateItem).Methods("POST")
+	r.HandleFunc("/policies", handlers.CreatePolicy).Methods("POST")
 
-    // Start the HTTP server
-    err := http.ListenAndServe(":8080", r)
-    if err != nil {
-        return err
-    }
-    return nil
+	err := http.ListenAndServe(":8080", r)
+	if err != nil {
+		return err
+	}
+	return nil
 }

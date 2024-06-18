@@ -22,7 +22,7 @@ services:
   rest-api-app:
     build:
       context: .
-      dockerfile: Dockerfile  # Dockerfile'ın adı ve yolu
+      dockerfile: Dockerfile  
     container_name: rest-api-app
     ports:
       - "8080:8080"

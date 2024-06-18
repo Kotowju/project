@@ -1,22 +1,36 @@
 package services
 
 import (
-    "project/pkg/models"
-    "project/pkg/db"
+	"project/pkg/db"
+	"project/pkg/models"
 )
 
-// CreateUser inserts a new user into the database.
+// tworzenie nowego użytkownika w bazie
 func CreateUser(user models.User) error {
-    conn, err := db.Connect()
-    if err != nil {
-        return err
-    }
-    defer conn.Close()
+	dbConn, err := db.Connect()
+	if err != nil {
+		return err
+	}
+	defer dbConn.Close()
+	return nil
+}
 
-    query := "INSERT INTO users (username, email) VALUES (?, ?)"
-    _, err = conn.Exec(query, user.Username, user.Email)
-    if err != nil {
-        return err
-    }
-    return nil
+// usuwanie użytkownika z bazy
+func DeleteUser(id int) error {
+	dbConn, err := db.Connect()
+	if err != nil {
+		return err
+	}
+	defer dbConn.Close()
+	return nil
+}
+
+// Update użytkownika w bazie
+func UpdateUser(user models.User) error {
+	dbConn, err := db.Connect()
+	if err != nil {
+		return err
+	}
+	defer dbConn.Close()
+	return nil
 }

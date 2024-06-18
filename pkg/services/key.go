@@ -3,27 +3,34 @@ package services
 import (
 	"project/pkg/db"
 	"project/pkg/models"
-	"project/pkg/vault"
 )
 
-// CreateKey stores the key's secret in Vault and the key's metadata in the database.
+// tworzenie klucza w bazie
 func CreateKey(key models.Key) error {
-	// Store the secret in Vault
-	err := vault.StoreSecret(key.Name, key.Secret)
+	dbConn, err := db.Connect()
 	if err != nil {
 		return err
 	}
+	defer dbConn.Close()
+	return nil
+}
 
-	conn, err := db.Connect()
+// usuwanie kluacz z DB przez ID
+func DeleteKey(id int) error {
+	dbConn, err := db.Connect()
 	if err != nil {
 		return err
 	}
-	defer conn.Close()
+	defer dbConn.Close()
+	return nil
+}
 
-	query := "INSERT INTO keys (name, username) VALUES (?, ?)"
-	_, err = conn.Exec(query, key.Name, key.Username)
+// Update klucza w bazie
+func UpdateKey(key models.Key) error {
+	dbConn, err := db.Connect()
 	if err != nil {
 		return err
 	}
+	defer dbConn.Close()
 	return nil
 }

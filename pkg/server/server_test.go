@@ -9,18 +9,16 @@ import (
 	"testing"
 )
 
-// TestServerStart function tests the StartServer function.
+// test jednostkowy serwera
 func TestServerStart(t *testing.T) {
-	// Create a new HTTP request to test the server
+	// tworzenie żadania skierowane na ścieżkę /users
 	req, err := http.NewRequest("POST", "/users", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	// Create a ResponseRecorder to record the response
 	rr := httptest.NewRecorder()
 
-	// Call the StartServer function (assuming it starts the server internally)
+	// odpalenie serwera
 	go func() {
 		err := server.StartServer()
 		if err != nil {
@@ -28,17 +26,14 @@ func TestServerStart(t *testing.T) {
 		}
 	}()
 
-	// Wait for the server to start (optional, depending on your setup)
-	// time.Sleep(1 * time.Second)
+	// opoznienie time.Sleep(1 * time.Second)
 
-	// Perform the HTTP request against the server
+	//wykonanie żądania
 	http.DefaultClient.Do(req)
 
-	// Check the status code (assuming the handler responds with 201 Created)
+	// check statusu
 	if status := rr.Code; status != http.StatusCreated {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusCreated)
 	}
-
-	// Additional assertions if needed
 }

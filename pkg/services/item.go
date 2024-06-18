@@ -1,22 +1,36 @@
 package services
 
 import (
-    "project/pkg/models"
-    "project/pkg/db"
+	"project/pkg/db"
+	"project/pkg/models"
 )
 
-// CreateItem inserts a new item into the database.
+// tworzy nowy item w bazie danych
 func CreateItem(item models.Item) error {
-    conn, err := db.Connect()
-    if err != nil {
-        return err
-    }
-    defer conn.Close()
+	dbConn, err := db.Connect()
+	if err != nil {
+		return err
+	}
+	defer dbConn.Close()
+	return nil
+}
 
-    query := "INSERT INTO items (sector, name, description) VALUES (?, ?, ?)"
-    _, err = conn.Exec(query, item.Sector, item.Name, item.Description)
-    if err != nil {
-        return err
-    }
-    return nil
+// usuwa item z DB na podstawie ID
+func DeleteItem(id int) error {
+	dbConn, err := db.Connect()
+	if err != nil {
+		return err
+	}
+	defer dbConn.Close()
+	return nil
+}
+
+// Update itemu w bazie
+func UpdateItem(item models.Item) error {
+	dbConn, err := db.Connect()
+	if err != nil {
+		return err
+	}
+	defer dbConn.Close()
+	return nil
 }

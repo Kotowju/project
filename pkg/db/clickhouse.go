@@ -7,7 +7,7 @@ import (
 	_ "github.com/ClickHouse/clickhouse-go"
 )
 
-// Connect creates a connection to the ClickHouse database.
+// Połączenie z bazą danych
 func Connect() (*sql.DB, error) {
 	db, err := sql.Open("clickhouse", "tcp://clickhouse:9000?username=default&password=&database=default")
 	if err != nil {
